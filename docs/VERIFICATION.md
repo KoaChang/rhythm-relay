@@ -17,6 +17,7 @@ September 15–16, 2026.
 - Independent review corrected feedback that could mistake cancelling early/late errors for accuracy, and a connection-setting race. Root review corrected empty default voices, output-latency alignment and audio-interruption handling.
 - GitHub Actions run [35056149460](https://github.com/KoaChang/rhythm-relay/actions/runs/35056149460) passed install, all 37 checks, production build and Pages deployment on Node 24. Public Chrome verification confirmed the app rendered at https://koachang.github.io/rhythm-relay/ and changing the selected pattern updated the displayed rhythm.
 - Added a prominent privacy disclosure and standalone policy after reviewing the separate developer agreements. The disconnect action uses the documented SDK logout method to clear this browser's session; live authenticated use remains part of the pending OAuth check.
+- Release `7dc5eb6` passed the same CI checks and deployment in [run 35056692699](https://github.com/KoaChang/rhythm-relay/actions/runs/35056692699). Public Chrome verification followed the privacy link, confirmed the complete policy rendered, and returned to the practice app.
 
 ## Not yet verified
 
