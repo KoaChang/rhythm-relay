@@ -108,13 +108,15 @@ export async function writeRhythmDocument(document, spec) {
         "mixerMaster",
         "mixerChannel",
       ]);
-      if (
-        t.entities
-          .get()
-          .some((entity) => !allowedBaselineTypes.has(entity.entityType))
-      ) {
+      const unexpectedTypes = [...new Set(t.entities.get()
+        .map((entity) => entity.entityType)
+        .filter((type) => !allowedBaselineTypes.has(type)))];
+      if (unexpectedTypes.length) {
+        const types = unexpectedTypes.slice(0, 8)
+          .map((type) => /^[A-Za-z][A-Za-z0-9]{0,63}$/.test(type) ? type : "unknown")
+          .join(", ");
         throw new Error(
-          "Export requires a new empty project; existing musical content will not be changed.",
+          `Export requires a new empty project; unexpected entity types: ${types}. Existing musical content will not be changed.`,
         );
       }
       let config = t.entities.ofTypes("config").getOne();
@@ -229,6 +231,79 @@ function verifyReadback(actual, spec) {
   }
 }
 
+const EXPORT_STAGES = Object.freeze({
+  open: "opening the new project",
+  start: "starting the project connection",
+  write: "writing the rhythm",
+  flush: "saving and closing the project connection",
+  reopen: "reopening the saved project",
+  verify: "checking the saved rhythm",
+});
+
+// Error messages can contain transport URLs or OAuth values. Keep short,
+// useful SDK explanations, but never copy raw errors, stacks, or URLs into UI.
+function safeErrorMessage(value) {
+  const message = typeof value === "string" ? value : "Unknown Audiotool error";
+  return message
+    .slice(0, 4096)
+    .replace(/\b(?:https?|wss?):\/\/[^\s<>"']+/gi, "[URL omitted]")
+    .replace(/\bBearer\s+[^\s,;"'}]+/gi, "Bearer [redacted]")
+    .replace(
+      /\b(authorization|access[_-]?token|refresh[_-]?token|id[_-]?token|client[_-]?secret|code[_-]?verifier|code|state)(["']?\s*[:=]\s*)(?:"[^"]*"|'[^']*'|[^\s,;&}]+)/gi,
+      "$1$2[redacted]",
+    )
+    .replace(/\b[A-Za-z0-9_+\/.=-]{32,}\b/g, "[opaque value omitted]")
+    .replace(/[\u0000-\u001f\u007f]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 400) || "Unknown Audiotool error";
+}
+
+function safeErrorChain(error, seen = new Set()) {
+  if (error == null) return undefined;
+  if (seen.has(error) || seen.size >= 4) return undefined;
+  seen.add(error);
+  const cause = error && typeof error === "object" && error.cause != null
+    ? safeErrorChain(error.cause, seen)
+    : undefined;
+  return new Error(safeErrorMessage(error?.message ?? error),
+    cause ? { cause } : undefined);
+}
+
+function describeErrorChain(error) {
+  const messages = [];
+  for (let current = error; current; current = current.cause) {
+    const message = current.message.replace(/[.!?]+$/, "");
+    if (message && messages.at(-1) !== message) messages.push(message);
+  }
+  return messages.join(" → ") || "Unknown Audiotool error";
+}
+
+/** Only return a credential-free Audiotool studio URL for the project. */
+export function safeProjectUrl(value) {
+  try {
+    const url = new URL(value);
+    const project = url.searchParams.get("project");
+    if (
+      url.protocol !== "https:" || url.username || url.password ||
+      !(url.hostname === "audiotool.com" || url.hostname.endsWith(".audiotool.com")) ||
+      url.pathname !== "/studio" || !/^[A-Za-z0-9_-]{1,128}$/.test(project ?? "")
+    ) return undefined;
+    // Do not forward unrelated parameters or a fragment from an SDK URL.
+    return `${url.origin}/studio?project=${encodeURIComponent(project)}`;
+  } catch {
+    return undefined;
+  }
+}
+
+/** Shared by the UI and tests so partial failures retain the inspection link. */
+export function formatExportFailure(error) {
+  const message = error?.exportStage
+    ? error.message
+    : `Export did not finish: ${describeErrorChain(safeErrorChain(error))}.`;
+  return { message, projectUrl: safeProjectUrl(error?.projectUrl) };
+}
+
 /** Create exactly one new working project, flush writes, and reopen to verify. */
 export async function createRhythmProject(client, input) {
   const spec = prepareRhythmExport(input);
@@ -241,20 +316,35 @@ export async function createRhythmProject(client, input) {
   const projectName = created.project?.name;
   if (!projectName) throw new Error("Audiotool did not return a new project.");
   let document;
-  let dawUrl;
+  // Match Nexus's documented DAW URL convention even if open() fails before
+  // returning a document. Validate the resource name before making a link.
+  const projectId = /^projects\/([A-Za-z0-9_-]{1,128})$/.exec(projectName)?.[1];
+  let dawUrl = projectId
+    ? `https://beta.audiotool.com/studio?project=${encodeURIComponent(projectId)}`
+    : undefined;
+  let stage = "open";
+  const stopDocument = async () => {
+    const current = document;
+    document = undefined;
+    await current.stop();
+  };
   try {
     document = await client.open(projectName);
-    dawUrl = document.dawUrl;
+    dawUrl = safeProjectUrl(document.dawUrl) ?? dawUrl;
+    stage = "start";
     await document.start();
+    stage = "write";
     const written = await writeRhythmDocument(document, spec);
-    await document.stop(); // SDK flushes pending writes before this resolves.
-    document = undefined;
+    stage = "flush";
+    await stopDocument(); // SDK flushes pending writes before this resolves.
+    stage = "reopen";
     document = await client.open(projectName);
     await document.start();
+    stage = "verify";
     const readback = readRhythmDocument(document, written.collectionId);
     verifyReadback(readback, spec);
-    await document.stop();
-    document = undefined;
+    stage = "flush";
+    await stopDocument();
     return {
       projectName,
       projectUrl: dawUrl,
@@ -266,7 +356,7 @@ export async function createRhythmProject(client, input) {
       totalBeats: spec.totalBeats,
       verified: true,
     };
-  } catch (cause) {
+  } catch (originalCause) {
     if (document) {
       try {
         await document.stop();
@@ -274,10 +364,12 @@ export async function createRhythmProject(client, input) {
         /* Keep the original failure. */
       }
     }
+    const cause = safeErrorChain(originalCause);
     const error = new Error(
-      "A new Audiotool project was created, but its rhythm could not be verified. Inspect it before exporting again.",
+      `Export stopped while ${EXPORT_STAGES[stage]}: ${describeErrorChain(cause)}. A new Audiotool project was created; its saved rhythm is unverified. Inspect it before exporting again.`,
       { cause },
     );
+    error.exportStage = stage;
     error.projectName = projectName;
     error.dawUrl = dawUrl;
     error.projectUrl = dawUrl;

@@ -20,11 +20,11 @@ The Audiotool adapter uses the official Nexus SDK. Its implemented flow creates 
 
 **Current integration evidence:** the real SDK's offline WASM validator accepts the generated entities, exact note timing and routing. The authenticated remote workflow and actual DAW playback have not yet been demonstrated. Replace this status only after the live checks below succeed.
 
-## Proposed category and rationale
+## Category fit
 
-**Working choice: composition.** The existing challenge research documents a composition category. Rhythm Relay's intended contribution is to turn a practiced rhythm into an editable drum pattern that can become part of a composition, while keeping the learning and creation steps close together.
+**Music Games** is the clearest fit: the app turns rhythm listening and tap-back practice into short interactive challenges. **Composition** also fits the music-theory learning and editable rhythm-generation workflow. The current official challenge pages say judges assign categories and a project can qualify for more than one category; the older FAQ wording differs. Follow the actual final form if it asks for a preference.
 
-**[PENDING: confirm the exact category label and applicable scope in the final entry form.]** No education-specific category or special award is assumed.
+Sources: https://www.audiotool.com/LetsBuild/ and https://www.audiotool.com/LetsBuild/challenges (checked September 16, 2026 UTC).
 
 ## How it was built and AI disclosure
 
@@ -43,8 +43,8 @@ OpenAI Codex substantially assisted with the project's design, implementation, t
 
 Fill these from observed results, without including passwords, tokens or private account data:
 
-- **OAuth application setup:** [PENDING — approved application registration and exact hosted callback configuration.]
-- **Hosted OAuth sign-in:** [PENDING — date tested, public app revision and successful return to the hosted app.]
+- **OAuth application setup:** Created September 15, 2026 with the exact hosted callback and minimum user:read/project:write scopes; Development mode.
+- **Hosted OAuth sign-in:** September 16, 2026 UTC: hosted revision 77554f1 successfully authorized the owner account and returned to the app. Judge access still needs verification.
 - **New Audiotool project:** [PENDING — an actual export from Rhythm Relay, with a judge-accessible project link or video proof as permitted by the final form.]
 - **Saved-data check:** [PENDING — selected rhythm, tempo, repeat count and note count; confirm the separate reopen/readback succeeds.]
 - **DAW playback:** [PENDING — confirm the exported note region is editable and actual playback is audible in Audiotool.]
@@ -58,7 +58,7 @@ Fill these from observed results, without including passwords, tokens or private
 | Source and README access | Public repository and setup instructions | Keep documentation aligned with the final app |
 | Meaningful Nexus DAW read or write | Actual SDK adapter and passing offline validator checks | Verify authenticated remote export; offline validation alone does not meet this requirement |
 | 2–5 minute demonstration | A 2 minute 30 second recording plan | Record and publish the finished demonstration after live verification |
-| Account and app setup | Audiotool account signup was visibly completed; developer application form prepared | Application creation approval and registration remain pending |
+| Account and app setup | Audiotool account and developer application created with user approval; hosted owner OAuth verified | Complete remote export and verify judge access |
 | Profile / Discord participation | Mentioned in the existing sponsor FAQ research | Confirm and complete any applicable participation requirements |
 | Final category, deadline and entry | Existing research says September 28, 2026; exact cutoff timezone is unconfirmed | Inspect the current final form, confirm cutoff and category, complete required user review and retain submission confirmation |
 

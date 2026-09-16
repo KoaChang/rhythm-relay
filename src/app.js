@@ -5,7 +5,12 @@ import {
   matchTaps,
 } from "./rhythm.js";
 import { RhythmAudio } from "./audio.js";
-import { connectAudiotool, createRhythmProject } from "./nexus.js";
+import {
+  connectAudiotool,
+  createRhythmProject,
+  formatExportFailure,
+  safeProjectUrl,
+} from "./nexus.js";
 
 const $ = (id) => document.getElementById(id);
 const audio = new RhythmAudio();
@@ -424,18 +429,20 @@ async function exportProject() {
     });
     $("connection-status").textContent =
       `Saved a new project with ${result.notesVerified} verified notes at ${tempo} BPM.`;
-    const url = new URL(result.projectUrl);
-    if (
-      url.protocol === "https:" &&
-      (url.hostname === "audiotool.com" ||
-        url.hostname.endsWith(".audiotool.com"))
-    ) {
-      $("project-link").href = url.href;
+    const url = safeProjectUrl(result.projectUrl);
+    if (url) {
+      $("project-link").href = url;
+      $("project-link").textContent = "Open your new project ↗";
       $("project-link").hidden = false;
     }
   } catch (error) {
-    $("connection-status").textContent =
-      `Export did not finish: ${error.message}. A new draft may exist in your Audiotool account; check there before retrying.`;
+    const failure = formatExportFailure(error);
+    $("connection-status").textContent = failure.message;
+    if (failure.projectUrl) {
+      $("project-link").href = failure.projectUrl;
+      $("project-link").textContent = "Inspect the created project ↗";
+      $("project-link").hidden = false;
+    }
   } finally {
     exporting = false;
     $("export").disabled = !client;
