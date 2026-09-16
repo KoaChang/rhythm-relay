@@ -1,0 +1,18 @@
+{
+  "name": "rhythm-relay",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4320",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4320",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "vite": "8.3.0"
+  },
+  "dependencies": {
+    "@audiotool/nexus": "0.0.17"
+  }
+}

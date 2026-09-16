@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4efe5" />
+    <meta
+      name="description"
+      content="Hear a rhythm. Find its spaces. Play it back. An interactive rhythm practice studio for Audiotool."
+    />
+    <title>Rhythm Relay — find your place in the beat</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <a class="brand" href="./" aria-label="Rhythm Relay home"
+        ><span class="brand-mark" aria-hidden="true">◒</span> rhythm relay<span
+          class="brand-dot"
+          >.</span
+        ></a
+      ><span class="top-note">A little practice. A better pocket.</span
+      ><a href="#audiotool" class="header-link"
+        >Take it to the studio <span aria-hidden="true">↗</span></a
+      >
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="title">
+        <div>
+          <p class="eyebrow">YOUR DAILY DOSE OF RHYTHM</p>
+          <h1 id="title">Hear it.<br />Feel it. <em>Find it.</em></h1>
+          <p class="lede">
+            Learn the shape of a rhythm, then play it back.<br />No instrument
+            needed. Just your sense of time.
+          </p>
+        </div>
+        <aside class="how">
+          <span class="small-label">THE RELAY</span>
+          <ol>
+            <li><b>01</b><span>Listen to the pattern.</span></li>
+            <li><b>02</b><span>Tap it from memory.</span></li>
+            <li><b>03</b><span>Make it your own in Audiotool.</span></li>
+          </ol>
+          <p>Start slow. Leave room for the spaces.</p>
+        </aside>
+      </section>
+      <section class="workbench" aria-label="Rhythm practice">
+        <aside class="library">
+          <div class="section-top">
+            <span class="small-label">01 / PICK A PATTERN</span
+            ><span class="little-dot" aria-hidden="true"></span>
+          </div>
+          <div id="presets" class="presets"></div>
+          <button id="custom-preset" class="custom-link">
+            + Build your own rhythm
+          </button>
+          <div id="custom-controls" hidden>
+            <label
+              >Subdivisions
+              <select id="steps">
+                <option>8</option>
+                <option>12</option>
+                <option selected>16</option>
+              </select></label
+            ><label
+              >Hits
+              <input id="hits" type="range" min="1" max="16" value="5" /><output
+                id="hits-value"
+                >5</output
+              ></label
+            ><label
+              >Rotate
+              <input
+                id="rotation"
+                type="range"
+                min="0"
+                max="15"
+                value="0"
+              /><output id="rotation-value">0</output></label
+            >
+            <p>
+              Evenly spaced hits create surprising grooves. Rotate to hear a
+              different starting point.
+            </p>
+          </div>
+          <div class="tempo">
+            <div>
+              <label for="bpm">TEMPO</label
+              ><output id="bpm-value">96 <small>BPM</small></output>
+            </div>
+            <input
+              id="bpm"
+              type="range"
+              min="50"
+              max="160"
+              value="96"
+              step="1"
+            />
+            <div class="range-caps">
+              <span>Take it slow</span><span>Find your flow</span>
+            </div>
+          </div>
+        </aside>
+        <div class="practice-panel">
+          <div class="section-top">
+            <span class="small-label">02 / LISTEN & REPLY</span
+            ><span id="mode-pill" class="mode-pill">READY WHEN YOU ARE</span>
+          </div>
+          <div class="pattern-heading">
+            <div>
+              <h2 id="pattern-title"></h2>
+              <p id="pattern-description"></p>
+            </div>
+            <span id="pattern-fraction" class="fraction"></span>
+          </div>
+          <div class="visual-stage">
+            <div class="orbit-wrap">
+              <svg
+                id="orbit"
+                viewBox="0 0 320 320"
+                role="img"
+                aria-label="Rhythm arranged around a circle"
+              ></svg>
+              <div class="orbit-center">
+                <span id="orbit-state">THE POCKET</span
+                ><strong id="orbit-count">1</strong
+                ><small id="orbit-caption">Every space counts</small>
+              </div>
+            </div>
+            <div class="practice-coach">
+              <span class="small-label">YOUR CUE</span>
+              <h3 id="cue-title">First, get it in your ears.</h3>
+              <p id="cue-description">
+                Listen once or twice. Notice the silence between the hits — it
+                is part of the rhythm.
+              </p>
+              <button id="tap" class="tap-pad" disabled>
+                <span>TAP</span><small>or press the space bar</small>
+              </button>
+              <p id="tap-count" class="tap-count">
+                Your taps stay on this device.
+              </p>
+            </div>
+          </div>
+          <div
+            id="steps-grid"
+            class="steps-grid"
+            aria-label="Pattern subdivisions"
+          ></div>
+          <div class="legend">
+            <span><i class="hit-key"></i> Hit</span><span><i></i> Space</span
+            ><span id="cycle-label"></span>
+          </div>
+          <div class="transport">
+            <button id="listen" class="button button-dark">
+              <span aria-hidden="true">▶</span> Listen</button
+            ><button id="practice" class="button button-coral">
+              Try it yourself <span aria-hidden="true">↗</span></button
+            ><button id="stop" class="stop" disabled>Stop</button
+            ><span id="session-status" role="status" aria-live="polite"
+              >Four count-in beats before each turn.</span
+            >
+          </div>
+          <div id="result" class="result" hidden aria-live="polite"></div>
+        </div>
+      </section>
+      <section class="studio" id="audiotool">
+        <div>
+          <span class="small-label">03 / KEEP THE IDEA GOING</span>
+          <h2>Practice makes a pattern.<br />Make it a track.</h2>
+          <p>
+            Send your rhythm to a new Audiotool project as editable notes.<br />Build
+            on it, swap the sound, or invite someone to play along.
+          </p>
+          <div class="studio-actions">
+            <button id="connect" class="button button-dark">
+              Connect Audiotool <span aria-hidden="true">↗</span></button
+            ><button id="export" class="button button-outline" disabled>
+              Create a rhythm project
+            </button>
+          </div>
+          <p id="connection-status" role="status">
+            Local practice works without an account. Audiotool is not connected.
+          </p>
+          <a id="project-link" hidden target="_blank" rel="noopener"
+            >Open your new project ↗</a
+          >
+        </div>
+        <div class="studio-note">
+          <span class="note-icon" aria-hidden="true">↗</span>
+          <h3>Your starting point,<br />still yours.</h3>
+          <p>
+            One new project. Your chosen rhythm and tempo. Your existing
+            projects stay as they are.
+          </p>
+          <details id="setup">
+            <summary>Connection setup</summary>
+            <label for="client-id">Audiotool app client ID</label
+            ><input
+              id="client-id"
+              autocomplete="off"
+              placeholder="App owner configuration"
+            />
+            <p>
+              The app owner adds the public OAuth client ID here. This is not a
+              password or a personal access token.
+            </p>
+            <button id="save-client" class="text-button">
+              Save connection setting
+            </button>
+          </details>
+        </div>
+      </section>
+      <footer>
+        <span class="brand">rhythm relay.</span>
+        <p>Small loops. Real progress.</p>
+        <a
+          href="https://www.audiotool.com/LetsBuild/"
+          target="_blank"
+          rel="noopener"
+          >Made for the Audiotool Let’s Build challenge ↗</a
+        >
+      </footer>
+    </main>
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>
