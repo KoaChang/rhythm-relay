@@ -2,7 +2,9 @@
 
 Hear a rhythm, tap it back, and turn it into an editable Audiotool project.
 
-**Development status:** local practice is implemented and browser checked. The export uses Audiotool's real Nexus SDK and passes its real offline WASM validator. Authenticated remote creation and playback have **not yet been verified**; account setup is pending. This is not yet a submitted competition entry.
+**[Try the practice app](https://koachang.github.io/rhythm-relay/)**
+
+**Development status:** practice is implemented, browser checked and hosted. The export uses Audiotool's real Nexus SDK and passes its real offline WASM validator. Authenticated remote creation and playback have **not yet been verified**; developer-app setup is pending. This is not yet a submitted competition entry.
 
 ## Try it locally
 
@@ -23,7 +25,7 @@ Each target hit matches at most one tap. Misses and extra taps reduce the score;
 
 1. Create/sign in to your free Audiotool account and register an OAuth app in the [developer dashboard](https://developer.audiotool.com/).
 2. Register the exact redirect URI `http://127.0.0.1:4320/` for local development. For a hosted build, register that site's exact HTTPS root URL too.
-3. Set the **public client ID** in the app's Connection setup panel, or set `VITE_AUDIOTOOL_CLIENT_ID` before building. Never enter a personal access token, client secret or password in that field.
+3. Set the **public client ID** in the app's Connection setup panel. Do not commit the issued identifier to this open-source repository. Never enter a personal access token, client secret or password in that field. A deployment can supply `VITE_AUDIOTOOL_CLIENT_ID` through its private configuration, subject to the applicable Audiotool developer terms.
 4. Connect through Audiotool's official OAuth flow. The SDK requests `project:write`.
 5. **Create a rhythm project** creates one fresh project with four repeats of the chosen rhythm, a synthesized Beatbox 8 drum instrument, editable MIDI notes, a mixer channel and an audio connection. Existing projects are not opened for modification. The adapter stops the write session, reopens the created project and compares its note data before reporting success.
 

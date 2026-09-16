@@ -641,6 +641,14 @@ h1 em {
   margin-top: 13px;
   max-width: 480px;
 }
+.studio .data-notice {
+  font-size: 10px;
+  max-width: 490px;
+  line-height: 1.6;
+}
+.data-notice a {
+  text-decoration: underline;
+}
 .studio #project-link {
   font-size: 12px;
   font-weight: 700;

@@ -15,12 +15,14 @@ September 15–16, 2026.
 - Custom rhythm controls changed subdivisions, pulse count and rotation; the resulting 8-step/3-hit/rotation-2 pattern was `[0,2,5]`.
 - With no app ID configured, Connect opens the setup explanation; export remains disabled. No authentication success is fabricated.
 - Independent review corrected feedback that could mistake cancelling early/late errors for accuracy, and a connection-setting race. Root review corrected empty default voices, output-latency alignment and audio-interruption handling.
+- GitHub Actions run [35056149460](https://github.com/KoaChang/rhythm-relay/actions/runs/35056149460) passed install, all 37 checks, production build and Pages deployment on Node 24. Public Chrome verification confirmed the app rendered at https://koachang.github.io/rhythm-relay/ and changing the selected pattern updated the displayed rhythm.
+- Added a prominent privacy disclosure and standalone policy after reviewing the separate developer agreements. The disconnect action uses the documented SDK logout method to clear this browser's session; live authenticated use remains part of the pending OAuth check.
 
 ## Not yet verified
 
 1. Real Audiotool OAuth login and callback.
 2. A genuinely new remote Audiotool project, saved note readback after reopen, and audible playback in the DAW.
-3. Public HTTPS hosting and callback configuration.
+3. Live OAuth callback configuration on the already published HTTPS site.
 4. A final 2–5 minute demonstration including the real integration.
 5. Contest entry and sponsor confirmation.
 

@@ -343,7 +343,7 @@ async function connect(login = false) {
     $("setup").open = true;
     $("client-id").focus();
     $("connection-status").textContent =
-      "The app’s Audiotool connection is awaiting account setup. You can keep practicing here.";
+      "The Audiotool connection is still being set up. You can keep practicing here.";
     return;
   }
   connecting = true;
@@ -361,8 +361,11 @@ async function connect(login = false) {
       $("connect").textContent = "Audiotool connected";
       $("connect").disabled = true;
       $("export").disabled = false;
+      $("disconnect").hidden = false;
       $("connection-status").textContent =
         `Connected${result.userName ? ` as ${result.userName}` : ""}. Ready to create a new rhythm project.`;
+    } else if (result.error) {
+      throw result.error;
     } else if (login) {
       await result.login();
     } else {
@@ -405,6 +408,8 @@ async function exportProject() {
   if (!client || exporting) return;
   exporting = true;
   $("export").disabled = true;
+  $("disconnect").disabled = true;
+  $("save-client").disabled = true;
   $("project-link").hidden = true;
   const pattern = structuredClone(selected),
     tempo = bpm;
@@ -434,6 +439,8 @@ async function exportProject() {
   } finally {
     exporting = false;
     $("export").disabled = !client;
+    $("disconnect").disabled = false;
+    $("save-client").disabled = false;
   }
 }
 
@@ -483,6 +490,11 @@ $("custom-preset").addEventListener("click", customPattern);
 );
 $("connect").addEventListener("click", () => connect(true));
 $("export").addEventListener("click", exportProject);
+$("disconnect").addEventListener("click", () => {
+  if (!client || exporting || connecting) return;
+  stop();
+  client.logout();
+});
 $("save-client").addEventListener("click", () => {
   if (connecting || exporting) return;
   const proposed = $("client-id").value.trim();
@@ -495,6 +507,10 @@ $("save-client").addEventListener("click", () => {
   try {
     localStorage.setItem("rhythm-relay-client-id", clientId);
   } catch {}
+  if (client) {
+    client.logout();
+    return;
+  }
   client = null;
   $("export").disabled = true;
   connect(false);
