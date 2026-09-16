@@ -1,6 +1,6 @@
 # Rhythm Relay — draft challenge entry
 
-**Status: preparation only; not submitted.** The practice app is hosted and checked. Real Audiotool OAuth, remote export, saved-data verification and DAW playback remain unverified. Do not submit this draft with the pending fields unresolved or describe the offline SDK checks as a completed live integration.
+**Status: preparation only; not submitted.** The practice app is hosted and checked. Owner-account OAuth, remote export and saved-note readback have succeeded, and the DAW showed the notes and visual playback activity. Audible playback, second-account/judge access remain unverified; the finished captioned demonstration labels automated practice and actual integration screenshots. Do not submit this draft with the pending fields unresolved.
 
 ## Project title
 
@@ -8,7 +8,7 @@ Rhythm Relay
 
 ## Short pitch
 
-Hear a rhythm, tap it back, and prepare it for a real track. Rhythm Relay combines short listening lessons, silent tap-back practice and clear timing feedback, with an implemented Nexus adapter for turning the selected pattern into editable Audiotool drums. Live export verification is pending.
+Hear a rhythm, tap it back, and turn it into editable Audiotool drums. Rhythm Relay combines short listening lessons, silent tap-back practice and clear timing feedback with a Nexus export that has created and verified saved notes in the app owner's account.
 
 ## Project description
 
@@ -18,7 +18,7 @@ Learners can slow the tempo or create an evenly distributed pulse pattern and ro
 
 The Audiotool adapter uses the official Nexus SDK. Its implemented flow creates a fresh project, writes four repeats of the chosen pattern as editable Beatbox 8 notes, adds a mixer channel and audio routing, then closes and reopens that project to compare the saved note data. It does not open other projects for modification. If verification fails after project creation, the app reports that a partial draft may remain and does not automatically retry or delete it.
 
-**Current integration evidence:** the real SDK's offline WASM validator accepts the generated entities, exact note timing and routing. The authenticated remote workflow and actual DAW playback have not yet been demonstrated. Replace this status only after the live checks below succeed.
+**Current integration evidence:** the real SDK's offline WASM validator accepts the generated entities, exact note timing and routing. Hosted owner-account OAuth and a new remote export succeeded, with 12 notes at 96 BPM verified after reopening the saved project. Audiotool showed a four-bar Beatbox 8 region with editable C-Hat notes and velocities, plus an advancing playhead and active channel/master meters. This visual evidence does not establish audible playback or access from another account.
 
 ## Category fit
 
@@ -37,18 +37,22 @@ OpenAI Codex substantially assisted with the project's design, implementation, t
 - Hosted practice app: https://koachang.github.io/rhythm-relay/
 - Source and README: https://github.com/KoaChang/rhythm-relay
 - Verification details: https://github.com/KoaChang/rhythm-relay/blob/main/docs/VERIFICATION.md
-- **Demo video: [PENDING — public, accessible 2–5 minute demonstration, including the real Audiotool integration.]**
+- Demo: https://koachang.github.io/rhythm-relay/demo.html (2:40.3, silent); direct MP4: https://koachang.github.io/rhythm-relay/demo.mp4. The FAQ permits a file link, while the current optional form field names Loom/YouTube/Vimeo; this hosting difference is disclosed.
+
+## Entry-form clarification
+
+The current form lists a September 28, 2026 deadline but still asks entrants to confirm a May 28–July 6 build window. This app was built in September. The entrant reports that the organizer confirmed September entries are eligible and that the form wording was not updated. That organizer permission has not been independently verified here; the actual September build date is retained. The form writes the deadline time zone as "UMT", which is ambiguous. The entrant explicitly instructed selection of the attestation after reporting that permission; final Submit remains untouched.
 
 ## Required live-integration evidence
 
 Fill these from observed results, without including passwords, tokens or private account data:
 
-- **OAuth application setup:** Created September 15, 2026 with the exact hosted callback and minimum user:read/project:write scopes; Development mode.
+- **OAuth application setup:** Created September 15, 2026 with the exact hosted callback and minimum user:read/project:write scopes; Initially Development; changed to Published on September 16, 2026 UTC with the same callbacks and scopes.
 - **Hosted OAuth sign-in:** September 16, 2026 UTC: hosted revision 77554f1 successfully authorized the owner account and returned to the app. Judge access still needs verification.
-- **New Audiotool project:** [PENDING — an actual export from Rhythm Relay, with a judge-accessible project link or video proof as permitted by the final form.]
-- **Saved-data check:** [PENDING — selected rhythm, tempo, repeat count and note count; confirm the separate reopen/readback succeeds.]
-- **DAW playback:** [PENDING — confirm the exported note region is editable and actual playback is audible in Audiotool.]
-- **Final demo:** [PENDING — URL and duration; use the real flow in DEMO-PLAN.md. Label any automated demonstration taps.]
+- **New Audiotool project:** A new project was created through the hosted app after the production-bundle repair. The two earlier failed drafts were left untouched. The demo includes actual screenshots of the result, with provenance in DEMO-NOTES.md. It does not imply access to the owner’s private draft.
+- **Saved-data check:** The new export completed a separate reopen/readback and reported 12 verified notes at 96 BPM. The DAW showed four repeats in a four-bar Beatbox 8 region with 12 C-Hat notes and velocities.
+- **DAW playback:** The editable region, notes, advancing playhead and active channel/master meters were observed. [PENDING — audible playback or captured-audio evidence.]
+- **Final demo:** https://koachang.github.io/rhythm-relay/demo.html — 2:40.3, silent. Practice recording and the separate actual integration screenshots are labeled; automated taps are identified.
 
 ## Readiness check from existing records
 
@@ -56,16 +60,16 @@ Fill these from observed results, without including passwords, tokens or private
 | --- | --- | --- |
 | Hosted functional app | Public practice app and public-browser pattern selection recorded in VERIFICATION.md | Recheck the final hosted revision after integration changes |
 | Source and README access | Public repository and setup instructions | Keep documentation aligned with the final app |
-| Meaningful Nexus DAW read or write | Actual SDK adapter and passing offline validator checks | Verify authenticated remote export; offline validation alone does not meet this requirement |
-| 2–5 minute demonstration | A 2 minute 30 second recording plan | Record and publish the finished demonstration after live verification |
-| Account and app setup | Audiotool account and developer application created with user approval; hosted owner OAuth verified | Complete remote export and verify judge access |
+| Meaningful Nexus DAW read or write | Owner-account remote creation and saved-note readback succeeded; the resulting notes were inspected in the DAW | Actual screenshots included with clear labels and provenance |
+| Demonstration | Finished 2:40.3 captioned video, within both published duration ranges | Current form names specific video hosts; direct file hosting follows the FAQ |
+| Account and app setup | Audiotool account and developer application created with user approval; hosted owner OAuth and remote export verified | A second-account check would provide additional evidence; it is not a stated entry prerequisite |
 | Profile / Discord participation | Mentioned in the existing sponsor FAQ research | Confirm and complete any applicable participation requirements |
-| Final category, deadline and entry | Existing research says September 28, 2026; exact cutoff timezone is unconfirmed | Inspect the current final form, confirm cutoff and category, complete required user review and retain submission confirmation |
+| Final category, deadline and entry | Existing research says September 28, 2026; exact cutoff timezone is unconfirmed | Current form inspected; entrant reports organizer permission for September builds. Final prize-entry action remains user operated; retain its confirmation |
 
-The recorded local suite has 37 passing tests with no failures or skips. Audio unit tests use a fake audio context; SDK session transport tests use an isolated fake client around the real offline document. Browser checks provide additional practice-interface and audio-scheduling evidence. None of those checks proves authenticated backend persistence or audible Audiotool playback.
+The recorded local suite has 45 passing tests with no failures or skips. Audio unit tests use a fake audio context; SDK session transport tests use an isolated fake client around the real offline document. A separate production-browser regression reproduced and verified the repair for a Nexus constructor-name minification failure. Hosted owner-account checks then established remote creation and saved-note readback. Audible Audiotool playback and access from a second account remain unverified.
 
 The existing sponsor research describes six judged category prizes of $1,000 each. Entry does not guarantee payment. No contest submission, award or payment is recorded.
 
 ## Preparation sources
 
-This draft uses only the existing `research-audiotool.md`, its referenced `research-build-challenges.md`, and this project's README, VERIFICATION.md and DEMO-PLAN.md. No new website research or submission action was performed for this draft.
+This draft uses the existing `research-audiotool.md`, its referenced `research-build-challenges.md`, this project's README, VERIFICATION.md and DEMO-PLAN.md, and the recorded owner-account hosted verification. Updating this draft did not submit a contest entry.

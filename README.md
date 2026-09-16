@@ -2,9 +2,9 @@
 
 Hear a rhythm, tap it back, and turn it into an editable Audiotool project.
 
-**[Try the practice app](https://koachang.github.io/rhythm-relay/)**
+**[Try the practice app](https://koachang.github.io/rhythm-relay/)** · [Watch the 2:40 captioned demo](https://koachang.github.io/rhythm-relay/demo.html)
 
-**Development status:** practice is implemented, browser checked and hosted. The export uses Audiotool's real Nexus SDK and passes its real offline WASM validator. Authenticated remote creation and playback have **not yet been verified**; developer-app setup is pending. This is not yet a submitted competition entry.
+**Development status:** practice is implemented, browser checked and hosted. Live Audiotool sign-in, new-project export and saved-note readback have succeeded with the app owner's account. The DAW showed the exported notes, an advancing playhead and active channel/master meters. Audible playback and access from a second account have not yet been verified. This is not yet a submitted competition entry.
 
 ## Try it locally
 
@@ -23,13 +23,15 @@ Each target hit matches at most one tap. Misses and extra taps reduce the score;
 
 ## Connect Audiotool
 
+The hosted app has its OAuth application configured and has been tested with the owner's account. Access from another account, including a judge's account, remains unverified. To configure your own local copy or deployment:
+
 1. Create/sign in to your free Audiotool account and register an OAuth app in the [developer dashboard](https://developer.audiotool.com/).
 2. Register the exact redirect URI `http://127.0.0.1:4320/` for local development. For a hosted build, register that site's exact HTTPS root URL too.
 3. Set the **public client ID** in the app's Connection setup panel. Do not commit the issued identifier to this open-source repository. Never enter a personal access token, client secret or password in that field. A deployment can supply `VITE_AUDIOTOOL_CLIENT_ID` through its private configuration, subject to the applicable Audiotool developer terms.
 4. Connect through Audiotool's official OAuth flow. The SDK requests `project:write`.
 5. **Create a rhythm project** creates one fresh project with four repeats of the chosen rhythm, a synthesized Beatbox 8 drum instrument, editable MIDI notes, a mixer channel and an audio connection. Existing projects are not opened for modification. The adapter stops the write session, reopens the created project and compares its note data before reporting success.
 
-If remote export fails after creation, a partial draft may remain. The app reports this and does not automatically retry or delete it. Inspect your Audiotool account before retrying.
+If remote export fails after creation, a partial draft may remain. The app reports the failed stage and provides an inspection link when available. It does not automatically retry or delete the project. Inspect it before retrying.
 
 The SDK fetches its WASM validator from Audiotool's CDN. Internet access is needed for OAuth and remote export. Local practice uses browser-synthesized sounds, with no microphone, uploaded samples or paid inference. Google Fonts are optional presentation assets; system font fallbacks work if they do not load.
 
@@ -41,7 +43,7 @@ npm run build
 npm run preview
 ```
 
-See [verification notes](docs/VERIFICATION.md) for exactly what has been checked and the remaining live-account gate. A static build can be hosted on an HTTPS static host after configuring its callback address.
+See [verification notes](docs/VERIFICATION.md) for the 45 passing checks, production-bundle regression, owner-account integration evidence and remaining demonstration/access checks. A static build can be hosted on an HTTPS static host after configuring its callback address.
 
 ## Originality and data
 
