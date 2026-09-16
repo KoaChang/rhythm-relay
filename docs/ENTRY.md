@@ -1,6 +1,6 @@
-# Rhythm Relay — draft challenge entry
+# Rhythm Relay — challenge entry
 
-**Status: preparation only; not submitted.** The practice app is hosted and checked. Owner-account OAuth, remote export and saved-note readback have succeeded, and the DAW showed the notes and visual playback activity. Audible playback, second-account/judge access remain unverified; the finished captioned demonstration labels automated practice and actual integration screenshots. Do not submit this draft with the pending fields unresolved.
+**Status: submitted by the entrant; Google Forms confirmation verified September 16, 2026 UTC.** The practice app is hosted and checked. Owner-account OAuth, remote export and saved-note readback have succeeded, and the DAW showed the notes and visual playback activity. Audible playback, second-account/judge access remain unverified; the finished captioned demonstration labels automated practice and actual integration screenshots. The limitations below describe validation coverage; they are not a claim of an award or payment.
 
 ## Project title
 
@@ -41,7 +41,7 @@ OpenAI Codex substantially assisted with the project's design, implementation, t
 
 ## Entry-form clarification
 
-The current form lists a September 28, 2026 deadline but still asks entrants to confirm a May 28–July 6 build window. This app was built in September. The entrant reports that the organizer confirmed September entries are eligible and that the form wording was not updated. That organizer permission has not been independently verified here; the actual September build date is retained. The form writes the deadline time zone as "UMT", which is ambiguous. The entrant explicitly instructed selection of the attestation after reporting that permission; final Submit remains untouched.
+The current form lists a September 28, 2026 deadline but still asks entrants to confirm a May 28–July 6 build window. This app was built in September. The entrant reports that the organizer confirmed September entries are eligible and that the form wording was not updated. That organizer permission has not been independently verified here; the actual September build date is retained. The form writes the deadline time zone as "UMT", which is ambiguous. The entrant explicitly instructed selection of the attestation after reporting that permission; the entrant subsequently submitted the form, and its response-recorded confirmation was verified.
 
 ## Required live-integration evidence
 
@@ -68,8 +68,8 @@ Fill these from observed results, without including passwords, tokens or private
 
 The recorded local suite has 45 passing tests with no failures or skips. Audio unit tests use a fake audio context; SDK session transport tests use an isolated fake client around the real offline document. A separate production-browser regression reproduced and verified the repair for a Nexus constructor-name minification failure. Hosted owner-account checks then established remote creation and saved-note readback. Audible Audiotool playback and access from a second account remain unverified.
 
-The existing sponsor research describes six judged category prizes of $1,000 each. Entry does not guarantee payment. No contest submission, award or payment is recorded.
+The existing sponsor research describes six judged category prizes of $1,000 each. Entry does not guarantee payment. The entry was submitted by the entrant and its confirmation verified. No award or payment is recorded.
 
 ## Preparation sources
 
-This draft uses the existing `research-audiotool.md`, its referenced `research-build-challenges.md`, this project's README, VERIFICATION.md and DEMO-PLAN.md, and the recorded owner-account hosted verification. Updating this draft did not submit a contest entry.
+This entry document uses the existing `research-audiotool.md`, its referenced `research-build-challenges.md`, this project's README, VERIFICATION.md and DEMO-PLAN.md, and the recorded owner-account hosted verification. The entrant performed the final submission.

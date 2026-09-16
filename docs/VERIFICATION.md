@@ -33,6 +33,6 @@ September 15–16, 2026.
 1. Audible DAW playback or a captured-audio recording.
 2. OAuth and export with a second account, including judge access to the published application.
 3. Acceptance of the GitHub Pages video hosting format: the FAQ permits an accessible file link, but the optional current form field names video platforms. The finished 2:40.3 silent demonstration contains actual practice recording and labeled actual integration screenshots; see [demo notes](DEMO-NOTES.md).
-4. Contest entry and sponsor confirmation.
+4. Award selection, sponsor acceptance, and payment. The entrant submitted the form, and its response-recorded confirmation was verified on September 16, 2026 UTC.
 
-Live Nexus creation and saved-note readback are verified for the owner's account only. This is not a completed contest entry. No payment has been promised or earned.
+Live Nexus creation and saved-note readback are verified for the owner's account only. The contest form has been submitted by the entrant. No payment has been promised or earned.

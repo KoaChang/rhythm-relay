@@ -4,7 +4,7 @@ Hear a rhythm, tap it back, and turn it into an editable Audiotool project.
 
 **[Try the practice app](https://koachang.github.io/rhythm-relay/)** · [Watch the 2:40 captioned demo](https://koachang.github.io/rhythm-relay/demo.html)
 
-**Development status:** practice is implemented, browser checked and hosted. Live Audiotool sign-in, new-project export and saved-note readback have succeeded with the app owner's account. The DAW showed the exported notes, an advancing playhead and active channel/master meters. Audible playback and access from a second account have not yet been verified. This is not yet a submitted competition entry.
+**Development status:** practice is implemented, browser checked and hosted. Live Audiotool sign-in, new-project export and saved-note readback have succeeded with the app owner's account. The DAW showed the exported notes, an advancing playhead and active channel/master meters. Audible playback and access from a second account have not yet been verified. The entrant submitted the Audiotool challenge form on September 16, 2026 UTC; the confirmation was verified. No award or payment has been recorded.
 
 ## Try it locally
 
